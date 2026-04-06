@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Date Check & Birthday Surprise</title>
+    <link href="https://fonts.cdnfonts.com/css/adlery-pro" rel="stylesheet" />
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background-image: url("https://community-lens.storage.googleapis.com/preview-media/thumbnail_poster/5b85e650-e737-4e4a-9b8d-4c8674647ccf.jpg");
+        background-size: cover;
+        background-position: center;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: center;
+        color: #ff69b4;
+      }
+
+      .box {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+        width: 320px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      h2 {
+        font-family: "Adlery Pro", sans-serif;
+        font-size: 22px;
+        margin-bottom: 15px;
+        color: #d3d3d3;
+        letter-spacing: 1px;
+      }
+
+      input[type="date"] {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: none;
+        margin-top: 10px;
+        font-size: 16px;
+        background-color: #ffe6f0;
+        color: #ff1493;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 12px;
+        width: 100%;
+        border-radius: 8px;
+        border: none;
+        background: #ff69b4;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #ff1493;
+        transform: scale(1.05);
+      }
+
+      #message {
+        margin-top: 10px;
+        color: #ff4d4d;
+      }
+
+      #animationPage {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("https://i.pinimg.com/originals/32/f1/6c/32f16cad1e065fa69717de7d03ff1797.jpg");
+        background-size: cover;
+        background-position: center;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .cloudBox {
+        position: absolute;
+        top: 50%;
+        right: 5%;
+        transform: translateY(-50%);
+        background: #ffffff;
+        color: black;
+        padding: 25px;
+        width: 350px;
+        border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
+        box-shadow:
+          0 8px 15px rgba(0, 0, 0, 0.2),
+          0 0 20px rgba(255, 255, 255, 0.5) inset;
+        z-index: 10;
+        font-size: 1.2em;
+      }
+
+      #animationPage video {
+        width: 80%;
+        height: 60%;
+        border-radius: 15px;
+        box-shadow: 0 0 20px pink;
+        display: none;
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #animationPage canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      #animationPage h1 {
+        margin: 0;
+        animation: fadeIn 2s ease forwards;
+        opacity: 0;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" id="inputBox">
+      <h2>Sharmao Nahi Sirf Date Dalo aur Meri Mehnat Ko Rang Do 😏</h2>
+      <input type="date" id="dateInput" />
+      <button onclick="checkDate()">Enter</button>
+      <p id="message"></p>
+    </div>
+
+    <div id="animationPage">
+      <div class="cloudBox">
+        <h1 id="messageText">
+          ohooohooooo ab bachpanaaa chaalaaaa gyaaa GAUUUURI ka,<br />
+          Kya matlab aj apka birthday hai hehehe Toh ye apke liye…
+        </h1>
+      </div>
+
+      <video
+        id="video"
+        src="https://ik.imagekit.io/Vijen10/wish.mp4"
+        playsinline
+      ></video>
+      <canvas id="confetti"></canvas>
+    </div>
+
+    <script>
+      function checkDate() {
+        let inputDate = document.getElementById("dateInput").value;
+        let correctDate = "2026-04-06";
+
+        if (inputDate === correctDate) {
+          document.getElementById("inputBox").style.display = "none";
+          document.getElementById("animationPage").style.display = "block";
+
+          startConfetti();
+
+          setTimeout(() => {
+            document.querySelector(".cloudBox").style.display = "none";
+
+            const video = document.getElementById("video");
+            video.style.display = "block";
+
+            video.muted = false;
+            video.volume = 1;
+
+            video.currentTime = 0;
+
+            const playPromise = video.play();
+
+            if (playPromise !== undefined) {
+              playPromise.catch(() => {
+                setTimeout(() => {
+                  video.play();
+                }, 500);
+              });
+            }
+          }, 5000);
+        } else {
+          document.getElementById("message").innerText =
+            "Galat date 😜 phir try karo!";
+        }
+      }
+
+      // 🎉 Confetti animation
+      const canvas = document.getElementById("confetti");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confettiArr = [];
+      for (let i = 0; i < 150; i++) {
+        confettiArr.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 4,
+          d: Math.random() * 150,
+          color: `hsl(${Math.random() * 360},100%,50%)`,
+          tilt: Math.random() * 10 - 10,
+          tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+        });
+      }
+
+      function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettiArr.forEach((f) => {
+          ctx.beginPath();
+          ctx.lineWidth = f.r;
+          ctx.strokeStyle = f.color;
+          ctx.moveTo(f.x + f.tilt + f.r / 2, f.y);
+          ctx.lineTo(f.x + f.tilt, f.y + f.tilt + f.r / 2);
+          ctx.stroke();
+
+          f.tiltAngle += f.tiltAngleIncremental;
+          f.y += (Math.cos(f.d) + 3 + f.r / 2) / 2;
+          f.tilt = Math.sin(f.tiltAngle) * 15;
+
+          if (f.y > canvas.height) {
+            f.y = -10;
+            f.x = Math.random() * canvas.width;
+          }
+        });
+      }
+
+      function startConfetti() {
+        setInterval(drawConfetti, 20);
+      }
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    </script>
+  </body>
+</html>
