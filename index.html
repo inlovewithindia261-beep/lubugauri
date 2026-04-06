@@ -1,18 +1,19 @@
 <!doctype html>
 <html>
   <head>
-    <title>Surprise Surprise</title>
-    <link href="https://fonts.cdnfonts.com/css/adlery-pro" rel="stylesheet" />
+    <title>Birthday Surprise</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <style>
       body {
         margin: 0;
         height: 100vh;
         font-family: "Poppins", sans-serif;
-        background-image: url("https://community-lens.storage.googleapis.com/preview-media/thumbnail_poster/5b85e650-e737-4e4a-9b8d-4c8674647ccf.jpg");
+        background-image: url("https://i.pinimg.com/originals/ac/e0/26/ace0262ace78ceba8f33a01cde239d4a.jpg");
         background-size: cover;
         background-position: center;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
         text-align: center;
         color: #ff69b4;
       }
@@ -22,150 +23,80 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.5);
-        padding: 30px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 25px;
         border-radius: 15px;
-        width: 320px;
-        text-align: center;
+        width: 90%;
+        max-width: 320px;
         backdrop-filter: blur(10px);
-        box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        box-sizing: border-box;
       }
 
-      h2 {
-        font-family: "Adlery Pro", sans-serif;
-        font-size: 22px;
-        margin-bottom: 15px;
-        color: #d3d3d3;
-        letter-spacing: 1px;
-      }
-
-      input[type="date"] {
+      input,
+      button {
         width: 100%;
         padding: 12px;
         border-radius: 10px;
         border: none;
-        margin-top: 10px;
         font-size: 16px;
-        background-color: #ffe6f0;
-        color: #ff1493;
-        text-align: center;
-        font-weight: bold;
+        margin-top: 10px;
+        box-sizing: border-box;
       }
 
       button {
-        margin-top: 15px;
-        padding: 12px;
-        width: 100%;
-        border-radius: 8px;
-        border: none;
         background: #ff69b4;
         color: white;
-        font-size: 16px;
         cursor: pointer;
-        transition: 0.3s;
-      }
-
-      button:hover {
-        background: #ff1493;
-        transform: scale(1.05);
-      }
-
-      #message {
-        margin-top: 10px;
-        color: #ff4d4d;
       }
 
       #animationPage {
         display: none;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("https://i.pinimg.com/originals/32/f1/6c/32f16cad1e065fa69717de7d03ff1797.jpg");
-        background-size: cover;
-        background-position: center;
-        text-align: center;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        z-index: 999;
+      }
+
+      .videoContainer {
+        height: 100vh;
+        aspect-ratio: 9 / 16;
+        margin: auto;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         overflow: hidden;
       }
 
-      .cloudBox {
-        position: absolute;
-        top: 50%;
-        right: 5%;
-        transform: translateY(-50%);
-        background: #ffffff;
-        color: black;
-        padding: 25px;
-        width: 350px;
-        border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
-        box-shadow:
-          0 8px 15px rgba(0, 0, 0, 0.2),
-          0 0 20px rgba(255, 255, 255, 0.5) inset;
-        z-index: 10;
-        font-size: 1.2em;
-      }
-
-      #animationPage video {
-        width: 80%;
-        height: 60%;
-        border-radius: 15px;
-        box-shadow: 0 0 20px pink;
-        display: none;
-        position: absolute;
-        top: 60%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      #animationPage canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 1;
-        pointer-events: none;
-      }
-
-      #animationPage h1 {
-        margin: 0;
-        animation: fadeIn 2s ease forwards;
-        opacity: 0;
-      }
-
-      @keyframes fadeIn {
-        to {
-          opacity: 1;
-        }
+      #bgVideo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
       }
     </style>
   </head>
+
   <body>
     <div class="box" id="inputBox">
-      <h2>Sharmao Nahi Sirf Date Dalo aur Meri Mehnat Ko Rang Do 😏</h2>
+      <h2>Enter Date Jii 😏</h2>
       <input type="date" id="dateInput" />
       <button onclick="checkDate()">Enter</button>
       <p id="message"></p>
     </div>
 
     <div id="animationPage">
-      <div class="cloudBox">
-        <h1 id="messageText">
-          ohooohooooo ab bachpanaaa chaalaaaa gyaaa GAUUUURI ka,<br />
-          Kya matlab aj apka birthday hai hehehe Toh ye apke liye…
-        </h1>
+      <div class="videoContainer">
+        <video id="bgVideo" playsinline>
+          <source
+            src="https://ik.imagekit.io/Vijen10/wish.mp4"
+            type="video/mp4"
+          />
+        </video>
       </div>
-
-      <video
-        id="video"
-        src="https://ik.imagekit.io/Vijen10/wish.mp4"
-        playsinline
-      ></video>
-      <canvas id="confetti"></canvas>
     </div>
 
     <script>
@@ -177,83 +108,34 @@
           document.getElementById("inputBox").style.display = "none";
           document.getElementById("animationPage").style.display = "block";
 
-          startConfetti();
+          const video = document.getElementById("bgVideo");
 
-          setTimeout(() => {
-            document.querySelector(".cloudBox").style.display = "none";
+          video.muted = false;
+          video.volume = 1;
 
-            const video = document.getElementById("video");
-            video.style.display = "block";
+          video.currentTime = 0;
 
-            video.muted = false;
-            video.volume = 1;
+          const playPromise = video.play();
 
-            video.currentTime = 0;
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              video.muted = true;
+              video.play();
+            });
+          }
 
-            const playPromise = video.play();
-
-            if (playPromise !== undefined) {
-              playPromise.catch(() => {
-                setTimeout(() => {
-                  video.play();
-                }, 500);
-              });
-            }
-          }, 5000);
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
         } else {
           document.getElementById("message").innerText =
             "Galat date 😜 phir try karo!";
         }
       }
-
-      // 🎉 Confetti animation
-      const canvas = document.getElementById("confetti");
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const confettiArr = [];
-      for (let i = 0; i < 150; i++) {
-        confettiArr.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          r: Math.random() * 6 + 4,
-          d: Math.random() * 150,
-          color: `hsl(${Math.random() * 360},100%,50%)`,
-          tilt: Math.random() * 10 - 10,
-          tiltAngleIncremental: Math.random() * 0.07 + 0.05,
-        });
-      }
-
-      function drawConfetti() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        confettiArr.forEach((f) => {
-          ctx.beginPath();
-          ctx.lineWidth = f.r;
-          ctx.strokeStyle = f.color;
-          ctx.moveTo(f.x + f.tilt + f.r / 2, f.y);
-          ctx.lineTo(f.x + f.tilt, f.y + f.tilt + f.r / 2);
-          ctx.stroke();
-
-          f.tiltAngle += f.tiltAngleIncremental;
-          f.y += (Math.cos(f.d) + 3 + f.r / 2) / 2;
-          f.tilt = Math.sin(f.tiltAngle) * 15;
-
-          if (f.y > canvas.height) {
-            f.y = -10;
-            f.x = Math.random() * canvas.width;
-          }
-        });
-      }
-
-      function startConfetti() {
-        setInterval(drawConfetti, 20);
-      }
-
-      window.addEventListener("resize", () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      });
     </script>
   </body>
 </html>
